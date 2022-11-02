@@ -1,0 +1,39 @@
+<app-page title="Dashboard">
+  <div ibmGrid [useCssGrid]="true" class="cds--subgrid">
+    <div ibmCol [columnNumbers]="{ sm: 4, md: 8, lg: 16, xlg: 16 }" style="margin-bottom: 2rem">
+      <ibm-date-picker
+        label="Início"
+        rangeLabel="Fim"
+        [range]="true"
+        language="pt"
+        dateFormat="d/m/Y"
+        placeholder="dd/mm/yyyy"
+        [formControl]="intervaloCtrl">
+      </ibm-date-picker>
+    </div>
+    <div ibmCol [columnNumbers]="{ sm: 4, md: 4, lg: 8, xlg: 8 }" style="margin-bottom: 2rem">
+      <ng-container *ngIf="despesasReceitas$ | async">
+        <ibm-pie-chart [data]="despesasReceitasChartData" [options]="despesasReceitasChartOptions"></ibm-pie-chart>
+      </ng-container>
+    </div>
+    <div ibmCol [columnNumbers]="{ sm: 4, md: 4, lg: 8, xlg: 8 }" style="margin-bottom: 2rem">
+      <ng-container *ngIf="evolucao$ | async">
+        <ibm-stacked-area-chart [data]="evolucaoChartData" [options]="evolucaoChartOptions"></ibm-stacked-area-chart>
+      </ng-container>
+    </div>
+    <div ibmCol [columnNumbers]="{ sm: 4, md: 4, lg: 8, xlg: 8 }" style="margin-bottom: 2rem">
+      <ng-container *ngIf="despesasPorCategoria$ | async">
+        <ibm-donut-chart
+          [data]="despesasPorCategoriaChartData"
+          [options]="despesasPorCategoriaChartOptions"></ibm-donut-chart>
+      </ng-container>
+    </div>
+    <div ibmCol [columnNumbers]="{ sm: 4, md: 4, lg: 8, xlg: 8 }" style="margin-bottom: 2rem">
+      <ng-container *ngIf="receitasPorCategoria$ | async">
+        <ibm-donut-chart
+          [data]="receitasPorCategoriaChartData"
+          [options]="receitasPorCategoriaChartOptions"></ibm-donut-chart>
+      </ng-container>
+    </div>
+  </div>
+</app-page>

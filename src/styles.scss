@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@use '@carbon/styles';
+@import "@carbon/charts/styles.css";
+
+html,
+body {
+  height: auto;
+  margin: 0;
+  background-color: var(--cds-background, #161616);
+}
+
+.hide-mobile {
+  @media (max-width: 40rem) {
+    display: none;
+  }
+}
+
+.cds--subgrid.cds--css-grid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.cds--toast-notification__caption {
+  padding-top: 0;
+}

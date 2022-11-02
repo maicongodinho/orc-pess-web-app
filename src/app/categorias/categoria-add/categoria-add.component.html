@@ -1,0 +1,22 @@
+<app-page title="Nova categoria" description="Incluir uma nova categoria">
+  <div ibmGrid [useCssGrid]="true" class="cds--subgrid" [formGroup]="form">
+    <div ibmCol [columnNumbers]="{ sm: 4, md: 4, lg: 4, xlg: 4 }">
+      <ibm-label
+        [invalid]="nome.invalid && (nome.dirty || nome.touched)"
+        [invalidText]="nome.errors?.['required'] ? 'Nome é obrigatório' : 'Campo inválido'"
+        helperText="Exemplo: Transporte, Salário, Alimentação, etc.">
+        Nome
+        <input ibmText formControlName="nome" [invalid]="nome.invalid && (nome.dirty || nome.touched)" />
+      </ibm-label>
+      <br />
+      <ibm-label helperText="Uma breve descrição sobre a categoria">
+        Descrição
+        <input ibmText formControlName="descricao" />
+      </ibm-label>
+    </div>
+  </div>
+  <app-form-buttons
+    [showExcluir]="false"
+    (enviarClick)="onEnviarClick()"
+    (cancelarClick)="onCancelarClick()"></app-form-buttons>
+</app-page>

@@ -1,0 +1,22 @@
+@use '@carbon/type';
+
+h1 {
+  @include type.type-style('heading-05');
+}
+
+p {
+  line-height: 2rem;
+}
+
+p > a {
+  font-size: var(--cds-body-02-font-size, 1rem);
+  font-weight: var(--cds-body-02-font-weight, 400);
+  line-height: var(--cds-body-02-line-height, 1.5);
+  letter-spacing: var(--cds-body-02-letter-spacing, 0);
+  cursor: pointer;
+  line-height: 2rem;
+}
+
+button {
+  margin-right: 1rem;
+}

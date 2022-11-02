@@ -1,0 +1,57 @@
+<app-page title="Nova receita" description="Incluir uma nova receita">
+  <div ibmGrid [useCssGrid]="true" class="cds--subgrid" [formGroup]="form">
+    <div ibmCol [columnNumbers]="{ sm: 4, md: 4, lg: 4, xlg: 4 }">
+      <ibm-date-picker
+        formControlName="data"
+        label="Data"
+        language="pt"
+        [invalid]="data.invalid && (data.dirty || data.touched)"
+        [invalidText]="data.errors?.['required'] ? 'Data é obrigatória' : 'Campo inválido'"
+        dateFormat="d/m/Y"></ibm-date-picker>
+      <br />
+      <ibm-label
+        [invalid]="valor.invalid && (valor.dirty || valor.touched)"
+        [invalidText]="valor.errors?.['required'] ? 'Valor é obrigatório' : valor.errors?.['min'] ? 'Valor mínimo é de R$ 0,01' : 'Campo inválido'"
+        helperText="Exemplo: R$ 100,00">
+        Valor
+        <input
+          ibmText
+          type="text"
+          mask="separator.2"
+          thousandSeparator="."
+          separatorLimit="99999999999999"
+          prefix="R$ "
+          formControlName="valor"
+          [invalid]="valor.invalid && (valor.dirty || valor.touched)" />
+      </ibm-label>
+      <br />
+      <ibm-label helperText="Exemplo: Salário">
+        Descrição
+        <input ibmText formControlName="descricao" />
+      </ibm-label>
+      <br />
+      <ng-container *ngIf="findAllCategorias$ | async; else loading">
+        <ibm-combo-box
+          (search)="search($event)"
+          formControlName="categoriaId"
+          [items]="categoriaListItems"
+          label="Categoria"
+          placeholder=""
+          type="single"
+          helperText="Selecione uma categoria para sua despesa"
+          itemValueKey="value">
+          <ibm-dropdown-list></ibm-dropdown-list>
+        </ibm-combo-box>
+      </ng-container>
+      <ng-template #loading>
+        <ibm-label [skeleton]="true">
+          <input ibmText [skeleton]="true" />
+        </ibm-label>
+      </ng-template>
+    </div>
+  </div>
+  <app-form-buttons
+    [showExcluir]="false"
+    (enviarClick)="onEnviarClick()"
+    (cancelarClick)="onCancelarClick()"></app-form-buttons>
+</app-page>

@@ -1,0 +1,93 @@
+<div ibmGrid [useCssGrid]="true" [fullWidth]="true">
+  <div ibmCol [columnNumbers]="{ sm: 4, md: 4, lg: 5, xlg: 5 }">
+    <app-page>
+      <h1 title *ngIf="state === 'login'">Log in</h1>
+      <p description *ngIf="state === 'login'">
+        Não possui uma conta? <a (click)="state = 'register'" ibmLink>Registre-se</a>
+      </p>
+
+      <h1 title *ngIf="state === 'register'">Registre-se</h1>
+      <p description *ngIf="state === 'register'">
+        Já tem uma conta? <a (click)="state = 'login'" ibmLink>Efetuar login</a>
+      </p>
+
+      <div ibmGrid [useCssGrid]="true" class="cds--subgrid">
+        <div ibmCol [columnNumbers]="{ sm: 4, md: 8, lg: 16, xlg: 16 }">
+          <div *ngIf="state === 'login'" [formGroup]="loginForm">
+            <ibm-label
+              [invalid]="emailLogin.invalid && (emailLogin.dirty || emailLogin.touched)"
+              [invalidText]="emailLogin.errors?.['required'] ? 'E-mail é obrigatório' : emailLogin.errors?.['email'] ? 'E-mail inválido' : ''">
+              E-mail
+              <input
+                ibmText
+                formControlName="email"
+                [invalid]="emailLogin.invalid && (emailLogin.dirty || emailLogin.touched)" />
+            </ibm-label>
+            <br />
+            <ibm-label
+              [invalid]="senhaLogin.invalid && (senhaLogin.dirty || senhaLogin.touched)"
+              invalidText="Senha é obrigatória">
+              Senha
+              <input
+                [invalid]="senhaLogin.invalid && (senhaLogin.dirty || senhaLogin.touched)"
+                type="password"
+                ibmText
+                (keyup.enter)="entrarClick()"
+                formControlName="senha" />
+            </ibm-label>
+            <br />
+            <br />
+            <button ibmButton="primary" (click)="entrarClick()">Entrar</button>
+          </div>
+
+          <div *ngIf="state === 'register'" [formGroup]="registerForm">
+            <ibm-label
+              [invalid]="emailRegister.invalid && (emailRegister.dirty || emailRegister.touched)"
+              [invalidText]="emailRegister.errors?.['required'] ? 'E-mail é obrigatório' : emailRegister.errors?.['email'] ? 'E-mail inválido' : ''">
+              E-mail
+              <input
+                ibmText
+                formControlName="email"
+                [invalid]="emailRegister.invalid && (emailRegister.dirty || emailRegister.touched)" />
+            </ibm-label>
+            <br />
+            <ibm-label
+              [invalid]="nomeRegister.invalid && (nomeRegister.dirty || nomeRegister.touched)"
+              invalidText="Nome é obrigatório">
+              Nome
+              <input
+                ibmText
+                formControlName="nome"
+                [invalid]="nomeRegister.invalid && (nomeRegister.dirty || nomeRegister.touched)" />
+            </ibm-label>
+            <br />
+            <ibm-label>
+              Sobrenome
+              <input ibmText formControlName="sobrenome" />
+            </ibm-label>
+            <br />
+            <ibm-label
+              [invalid]="senhaRegister.invalid && (senhaRegister.dirty || senhaRegister.touched)"
+              invalidText="Senha é obrigatória">
+              Senha
+              <input
+                [invalid]="senhaRegister.invalid && (senhaRegister.dirty || senhaRegister.touched)"
+                type="password"
+                ibmText
+                (keyup.enter)="entrarClick()"
+                formControlName="senha" />
+            </ibm-label>
+            <br />
+            <br />
+            <button ibmButton="secondary" (click)="state = 'login'">
+              Cancelar <svg class="cds--btn__icon" ibmIcon="misuse--outline" size="20" title="Cancelar"></svg>
+            </button>
+            <button ibmButton="primary" (click)="registrarClick()">
+              Enviar <svg class="cds--btn__icon" ibmIcon="send" size="20" title="Enviar"></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </app-page>
+  </div>
+</div>

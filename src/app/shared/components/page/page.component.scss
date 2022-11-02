@@ -1,0 +1,19 @@
+@use '@carbon/type';
+
+.page {
+  margin-top: 3rem;
+  padding-bottom: 3rem;
+
+  h1 {
+    @include type.type-style('heading-05');
+  }
+
+  p {
+    line-height: 2rem;
+  }
+
+  .page__separator {
+    border-top: 0.05rem solid white;
+    margin: 2rem 0 2rem 0;
+  }
+}

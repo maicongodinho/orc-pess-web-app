@@ -1,0 +1,41 @@
+<app-page title="Despesas" description="Lista de despesas">
+  <ng-container *ngIf="findAll$ | async; else loading">
+    <ibm-table-container>
+      <ibm-table-toolbar [model]="model" #toolbar batchText="item selecionado" [cancelText]="{ CANCEL: 'Cancelar' }">
+        <ibm-table-toolbar-actions>
+          <button ibmButton="primary" [tabindex]="toolbar.selected ? 0 : -1" (click)="onEditarClick()">
+            Editar <svg class="cds--btn__icon" ibmIcon="edit" size="20" title="Editar"></svg>
+          </button>
+          <button ibmButton="primary" [tabindex]="toolbar.selected ? 0 : -1" (click)="openExcluirModal = true">
+            Excluir <svg class="cds--btn__icon" ibmIcon="trash-can" size="20" title="Excluir"></svg>
+          </button>
+        </ibm-table-toolbar-actions>
+        <ibm-table-toolbar-content *ngIf="!toolbar.selected">
+          <button ibmButton="primary" size="sm" [tabindex]="toolbar.selected ? -1 : 0" [routerLink]="['add']">
+            Adicionar
+            <svg class="cds--btn__icon" ibmIcon="add" size="20" title="Adicionar"></svg>
+          </button>
+        </ibm-table-toolbar-content>
+      </ibm-table-toolbar>
+      <ibm-table [model]="model" [showSelectionColumn]="true" [enableSingleSelect]="true" [sortable]="true">
+      </ibm-table>
+    </ibm-table-container>
+  </ng-container>
+  <ng-template #loading>
+    <ibm-table [model]="model" [skeleton]="true"> </ibm-table>
+  </ng-template>
+</app-page>
+
+<ibm-modal size="sm" [open]="openExcluirModal" (overlaySelected)="openExcluirModal = false">
+  <ibm-modal-header (closeSelect)="openExcluirModal = false" [showCloseButton]="true">
+    <p class="cds--modal-header__label cds--type-delta">Despesa</p>
+    <p class="cds--modal-header__heading cds--type-beta">Excluir</p>
+  </ibm-modal-header>
+  <div class="cds--modal-content">
+    <p>Você tem certeza que deseja excluir esse registro?</p>
+  </div>
+  <ibm-modal-footer>
+    <button ibmButton="secondary" (click)="openExcluirModal = false">Não</button>
+    <button ibmButton="primary" [attr.modal-primary-focus]="true" (click)="onExcluirClick()">Sim</button>
+  </ibm-modal-footer>
+</ibm-modal>

@@ -1,0 +1,53 @@
+<main class="cds--content" ibmTheme="g100">
+  <ibm-header name="Orçamento Pessoal" brand="" [route]="['dashboard']">
+    <ibm-hamburger class="cds--header__menu-toggle__hidden" (selected)="hasHamburger = !hasHamburger"></ibm-hamburger>
+    <ng-container *ngIf="usuariosService.getToken()">
+      <ibm-header-navigation>
+        <ibm-header-item [route]="['dashboard']">Dashboard</ibm-header-item>
+        <ibm-header-item [route]="['categorias']">Categorias</ibm-header-item>
+        <ibm-header-item [route]="['receitas']">Receitas</ibm-header-item>
+        <ibm-header-item [route]="['despesas']">Despesas</ibm-header-item>
+      </ibm-header-navigation>
+      <ibm-header-global class="header-info">
+        <p class="welcome-message hide-mobile">Bem vindo, {{ usuariosService.getLogin()?.nome }} 😃</p>
+        <ibm-header-action>
+          <button class="sair-btn" ibmButton="primary" #logoutTrigger (click)="openLogoutModal = true">
+            Sair
+            <svg class="cds--btn__icon" ibmIcon="logout" size="20" title="Sair"></svg>
+          </button>
+        </ibm-header-action>
+      </ibm-header-global>
+      <ibm-modal
+        size="sm"
+        [open]="openLogoutModal"
+        [trigger]="logoutTrigger"
+        (overlaySelected)="openLogoutModal = false">
+        <ibm-modal-header (closeSelect)="openLogoutModal = false" [showCloseButton]="true">
+          <p class="cds--modal-header__label cds--type-delta">Orçamento Pessoal</p>
+          <p class="cds--modal-header__heading cds--type-beta">Saindo</p>
+        </ibm-modal-header>
+        <div class="cds--modal-content">
+          <p>Você tem certeza que deseja sair?</p>
+        </div>
+        <ibm-modal-footer>
+          <button ibmButton="secondary" (click)="openLogoutModal = false">Não</button>
+          <button ibmButton="primary" [attr.modal-primary-focus]="true" (click)="onLogoutClick()">Sim</button>
+        </ibm-modal-footer>
+      </ibm-modal>
+    </ng-container>
+  </ibm-header>
+  <ibm-sidenav class="cds--header__menu-toggle__hidden" *ngIf="hasHamburger">
+    <ibm-sidenav-item [route]="['dashboard']">Dashboard</ibm-sidenav-item>
+    <ibm-sidenav-item [route]="['categorias']">Categorias</ibm-sidenav-item>
+    <ibm-sidenav-item [route]="['receitas']">Receitas</ibm-sidenav-item>
+    <ibm-sidenav-item [route]="['despesas']">Despesas</ibm-sidenav-item>
+  </ibm-sidenav>
+
+  <div
+    class="notification-container"
+    style="position: fixed; top: 40px; right: 8px; z-index: 9001; max-width: 30rem"></div>
+
+  <section class="content">
+    <router-outlet></router-outlet>
+  </section>
+</main>

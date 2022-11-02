@@ -1,0 +1,11 @@
+<div class="form-buttons">
+  <button ibmButton="secondary" *ngIf="showCancelar" (click)="cancelarClick.emit()">
+    Cancelar <svg class="cds--btn__icon" ibmIcon="misuse--outline" size="20" title="Cancelar"></svg>
+  </button>
+  <button ibmButton="danger--tertiary" *ngIf="showExcluir" (click)="excluirClick.emit()">
+    Excluir <svg class="cds--btn__icon" ibmIcon="trash-can" size="20" title="Excluir"></svg>
+  </button>
+  <button ibmButton="primary" *ngIf="showEnviar" (click)="enviarClick.emit()">
+    Enviar <svg class="cds--btn__icon" ibmIcon="send" size="20" title="Enviar"></svg>
+  </button>
+</div>

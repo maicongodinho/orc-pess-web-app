@@ -1,0 +1,76 @@
+<app-page title="Editar categoria" description="Editando uma categoria existente">
+  <ng-container *ngIf="findOne$ | async; else loading">
+    <div ibmGrid [useCssGrid]="true" class="cds--subgrid" [formGroup]="form">
+      <div ibmCol [columnNumbers]="{ sm: 4, md: 4, lg: 4, xlg: 4 }">
+        <ibm-date-picker
+          formControlName="data"
+          label="Data"
+          language="pt"
+          [invalid]="data.invalid && (data.dirty || data.touched)"
+          [invalidText]="data.errors?.['required'] ? 'Data é obrigatória' : 'Campo inválido'"
+          dateFormat="d/m/Y"></ibm-date-picker>
+        <br />
+        <ibm-label
+          [invalid]="valor.invalid && (valor.dirty || valor.touched)"
+          [invalidText]="valor.errors?.['required'] ? 'Valor é obrigatório' : valor.errors?.['min'] ? 'Valor mínimo é de R$ 0,01' : 'Campo inválido'"
+          helperText="Exemplo: R$ 100,00">
+          Valor
+          <input
+            ibmText
+            type="text"
+            mask="separator.2"
+            thousandSeparator="."
+            separatorLimit="99999999999999"
+            prefix="R$ "
+            formControlName="valor"
+            [invalid]="valor.invalid && (valor.dirty || valor.touched)" />
+        </ibm-label>
+        <br />
+        <ibm-label>
+          Descrição
+          <input ibmText formControlName="descricao" />
+        </ibm-label>
+        <br />
+        <ng-container *ngIf="findAllCategorias$ | async; else loading">
+          <ibm-combo-box
+            (search)="search($event)"
+            formControlName="categoriaId"
+            [items]="categoriaListItems"
+            label="Categoria"
+            placeholder=""
+            type="single"
+            helperText="Selecione uma categoria para sua despesa"
+            itemValueKey="value">
+            <ibm-dropdown-list></ibm-dropdown-list>
+          </ibm-combo-box>
+        </ng-container>
+        <ng-template #loading>
+          <ibm-label [skeleton]="true">
+            <input ibmText [skeleton]="true" />
+          </ibm-label>
+        </ng-template>
+      </div>
+    </div>
+    <app-form-buttons
+      (excluirClick)="openExcluirModal = true"
+      (enviarClick)="onEnviarClick()"
+      (cancelarClick)="onCancelarClick()"></app-form-buttons>
+  </ng-container>
+  <ng-template #loading>
+    <ibm-skeleton-placeholder></ibm-skeleton-placeholder>
+  </ng-template>
+</app-page>
+
+<ibm-modal size="sm" [open]="openExcluirModal" (overlaySelected)="openExcluirModal = false">
+  <ibm-modal-header (closeSelect)="openExcluirModal = false" [showCloseButton]="true">
+    <p class="cds--modal-header__label cds--type-delta">Despesa</p>
+    <p class="cds--modal-header__heading cds--type-beta">Excluir</p>
+  </ibm-modal-header>
+  <div class="cds--modal-content">
+    <p>Você tem certeza que deseja excluir esse registro?</p>
+  </div>
+  <ibm-modal-footer>
+    <button ibmButton="secondary" (click)="openExcluirModal = false">Não</button>
+    <button ibmButton="primary" [attr.modal-primary-focus]="true" (click)="onExcluirClick()">Sim</button>
+  </ibm-modal-footer>
+</ibm-modal>
